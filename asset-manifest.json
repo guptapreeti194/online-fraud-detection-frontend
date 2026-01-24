@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/online-fraud-detection-frontend/static/css/main.bd66a3cc.css",
-    "main.js": "/online-fraud-detection-frontend/static/js/main.21e29bac.js",
+    "main.js": "/online-fraud-detection-frontend/static/js/main.c06d8bec.js",
     "index.html": "/online-fraud-detection-frontend/index.html",
     "main.bd66a3cc.css.map": "/online-fraud-detection-frontend/static/css/main.bd66a3cc.css.map",
-    "main.21e29bac.js.map": "/online-fraud-detection-frontend/static/js/main.21e29bac.js.map"
+    "main.c06d8bec.js.map": "/online-fraud-detection-frontend/static/js/main.c06d8bec.js.map"
   },
   "entrypoints": [
     "static/css/main.bd66a3cc.css",
-    "static/js/main.21e29bac.js"
+    "static/js/main.c06d8bec.js"
   ]
 }
