@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://guptapreeti194.github.io/online-fraud-detection-frontend",
+ "homepage": ".",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "ajv": "^8.17.1",
