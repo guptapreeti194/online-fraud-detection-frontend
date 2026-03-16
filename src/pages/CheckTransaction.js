@@ -9,7 +9,7 @@ import { Label } from "../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 
-c//onst BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+//onst BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = "https://sentinel-ai-backend-weoo.onrender.com/api";
 
 const CheckTransaction = () => {
