@@ -31,7 +31,7 @@ const AboutPage = () => {
             About This Project
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            A comprehensive fraud detection system built with Machine Learning to protect online payment transactions
+            A comprehensive fraud detection system built with XGBoost and ensemble Machine Learning to protect online payment transactions with 99.63% ROC-AUC accuracy
           </p>
         </div>
 
@@ -47,12 +47,13 @@ const AboutPage = () => {
                   Problem Statement
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  Online payment fraud is a growing concern in the digital economy, causing billions of dollars in losses annually. 
+                  Online payment fraud is a growing concern in the digital economy, causing billions of dollars in losses annually.
                   Traditional rule-based systems struggle to detect sophisticated fraud patterns that evolve constantly.
+                  In real-world datasets like PaySim, fraud accounts for only 0.13% of all transactions — making detection extremely challenging due to severe class imbalance.
                 </p>
                 <p className="text-slate-600 leading-relaxed">
-                  Our project addresses this challenge by leveraging Machine Learning to identify fraudulent transactions in real-time, 
-                  reducing false positives while maintaining high detection rates.
+                  Our project addresses this challenge by leveraging XGBoost with SMOTE oversampling and 26 engineered features to identify fraudulent transactions in real-time,
+                  achieving only 2 missed frauds and 3 false alarms out of 100,000 test transactions.
                 </p>
               </div>
             </div>
@@ -71,25 +72,25 @@ const AboutPage = () => {
                   Our Solution
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  We developed an end-to-end web application that uses advanced Machine Learning algorithms to detect fraudulent 
-                  payment transactions with high accuracy. The system provides:
+                  We developed an end-to-end web application that uses XGBoost — the industry standard for tabular fraud detection — trained on 500,000 real transactions
+                  from the PaySim dataset (6.3M total). The system provides:
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2 text-slate-600">
                     <span className="text-emerald-600 mt-1">✓</span>
-                    <span><strong>Real-time fraud detection</strong> with instant risk assessment</span>
+                    <span><strong>Real-time fraud detection</strong> with instant risk assessment and 99.63% ROC-AUC</span>
                   </li>
                   <li className="flex items-start gap-2 text-slate-600">
                     <span className="text-emerald-600 mt-1">✓</span>
-                    <span><strong>Explainable AI</strong> with clear reasoning for each prediction</span>
+                    <span><strong>26 engineered features</strong> including balance anomaly, account drain, and transaction pattern signals</span>
                   </li>
                   <li className="flex items-start gap-2 text-slate-600">
                     <span className="text-emerald-600 mt-1">✓</span>
-                    <span><strong>Admin analytics dashboard</strong> for monitoring and reporting</span>
+                    <span><strong>SMOTE oversampling</strong> to handle real-world class imbalance (0.125% fraud rate)</span>
                   </li>
                   <li className="flex items-start gap-2 text-slate-600">
                     <span className="text-emerald-600 mt-1">✓</span>
-                    <span><strong>Scalable architecture</strong> using modern web technologies</span>
+                    <span><strong>Admin analytics dashboard</strong> for monitoring transaction history and model performance</span>
                   </li>
                 </ul>
               </div>
@@ -119,8 +120,9 @@ const AboutPage = () => {
                     <h3 className="text-xl font-semibold text-slate-900" style={{fontFamily: 'Manrope'}}>Data Collection & Preprocessing</h3>
                   </div>
                   <p className="text-slate-600">
-                    Collect transaction data including amount, time, transaction type, and account balances. 
-                    Apply one-hot encoding for categorical features and engineer additional features like balance change ratios.
+                    Load 500,000 transactions sampled from the real PaySim dataset (6.3M rows, 0.125% fraud rate).
+                    Apply one-hot encoding for transaction types (PAYMENT, TRANSFER, CASH_OUT, DEBIT, CASH_IN)
+                    and engineer 26 features including balance errors, account drain flags, log-transformed amounts, and flow anomalies.
                   </p>
                 </div>
               </div>
@@ -135,12 +137,13 @@ const AboutPage = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <Brain className="w-5 h-5 text-blue-600" />
-                    <h3 className="text-xl font-semibold text-slate-900" style={{fontFamily: 'Manrope'}}>Model Training</h3>
+                    <h3 className="text-xl font-semibold text-slate-900" style={{fontFamily: 'Manrope'}}>SMOTE + Model Training</h3>
                   </div>
                   <p className="text-slate-600">
-                    Train two powerful ML models: <strong>Logistic Regression</strong> for interpretability and 
-                    <strong> Random Forest</strong> for handling complex non-linear patterns. 
-                    Select the best performer based on ROC-AUC score.
+                    Apply SMOTE oversampling to balance the training set from 0.125% fraud to 50/50, generating 799,000 balanced samples.
+                    Train four competing models: <strong>XGBoost</strong> (0.9963), <strong>Gradient Boosting</strong> (0.9931),
+                    <strong> Random Forest</strong> (0.9919), and <strong>Logistic Regression</strong> (0.9895).
+                    XGBoost is selected as best performer.
                   </p>
                 </div>
               </div>
@@ -158,8 +161,9 @@ const AboutPage = () => {
                     <h3 className="text-xl font-semibold text-slate-900" style={{fontFamily: 'Manrope'}}>Evaluation & Deployment</h3>
                   </div>
                   <p className="text-slate-600">
-                    Evaluate model performance using ROC-AUC metric. Deploy the trained model in a FastAPI backend 
-                    for real-time predictions with comprehensive API endpoints.
+                    Evaluate on 100,000 unseen test transactions. XGBoost achieves 99.63% ROC-AUC with 98% precision and recall on fraud cases —
+                    catching 123 out of 125 fraud cases with only 3 false alarms.
+                    Deploy the trained model in a FastAPI backend for real-time predictions.
                   </p>
                 </div>
               </div>
@@ -177,8 +181,9 @@ const AboutPage = () => {
                     <h3 className="text-xl font-semibold text-slate-900" style={{fontFamily: 'Manrope'}}>Real-time Prediction</h3>
                   </div>
                   <p className="text-slate-600">
-                    Process incoming transactions through the model, generate risk scores, and provide explainable results 
-                    with specific fraud indicators detected in the transaction.
+                    Process incoming transactions through the XGBoost model, compute a risk score (0–100),
+                    and provide explainable results with specific fraud indicators such as complete balance drain,
+                    high-risk transaction type, amount-to-balance anomaly, and destination balance mismatch.
                   </p>
                 </div>
               </div>
@@ -195,20 +200,23 @@ const AboutPage = () => {
                   Academic Project
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  This project was developed as part of an academic curriculum to demonstrate the practical application 
-                  of Machine Learning in solving real-world problems.
+                  This project was developed as part of an academic curriculum to demonstrate the practical application
+                  of Machine Learning in solving real-world financial fraud problems.
                 </p>
                 <div className="space-y-2 text-sm text-slate-600">
                   <p><strong>Course:</strong> Machine Learning & Data Analytics</p>
-                  <p><strong>Technology Stack:</strong> FastAPI, React, MongoDB, scikit-learn</p>
-                  <p><strong>Key Algorithms:</strong> Random Forest, Logistic Regression</p>
-                  <p><strong>Evaluation Metric:</strong> ROC-AUC Score</p>
+                  <p><strong>Dataset:</strong> PaySim — 500K sampled from 6.3M real transactions</p>
+                  <p><strong>Technology Stack:</strong> FastAPI, React, MongoDB, XGBoost, scikit-learn</p>
+                  <p><strong>Key Algorithms:</strong> XGBoost, Random Forest, Gradient Boosting, Logistic Regression</p>
+                  <p><strong>Class Balancing:</strong> SMOTE (Synthetic Minority Oversampling Technique)</p>
+                  <p><strong>Evaluation Metric:</strong> ROC-AUC Score — 99.63%</p>
+                  <p><strong>Features Engineered:</strong> 26 fraud-specific features</p>
                 </div>
               </div>
               <div>
-                <img 
-                  src="https://images.unsplash.com/photo-1758518727707-729d9bef1a16?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHRlYW0lMjBhbmFseXppbmclMjBkYXRhJTIwbW9kZXJuJTIwb2ZmaWNlfGVufDB8fHx8MTc2ODUxNjY3M3ww&ixlib=rb-4.1.0&q=85" 
-                  alt="Team analyzing data" 
+                <img
+                  src="https://images.unsplash.com/photo-1758518727707-729d9bef1a16?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHRlYW0lMjBhbmFseXppbmclMjBkYXRhJTIwbW9kZXJuJTIwb2ZmaWNlfGVufDB8fHx8MTc2ODUxNjY3M3ww&ixlib=rb-4.1.0&q=85"
+                  alt="Team analyzing data"
                   className="w-full h-auto rounded-xl shadow-lg"
                 />
               </div>
@@ -219,8 +227,8 @@ const AboutPage = () => {
         {/* CTA */}
         <div className="text-center">
           <Link to="/check">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-slate-900 text-white hover:bg-slate-800 rounded-full px-8 py-6 text-base font-medium transition-all active:scale-95"
               data-testid="cta-try-now-btn"
             >

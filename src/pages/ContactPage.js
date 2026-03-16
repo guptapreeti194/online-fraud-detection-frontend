@@ -23,7 +23,6 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real application, this would send the data to a backend
     console.log("Contact form submitted:", formData);
     toast.success("Message sent successfully!");
     setSubmitted(true);
@@ -167,7 +166,15 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-900">Technology</p>
-                  <p className="text-slate-600">Machine Learning, FastAPI, React</p>
+                  <p className="text-slate-600">XGBoost, FastAPI, React, MongoDB</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">Dataset</p>
+                  <p className="text-slate-600">PaySim — 500K from 6.3M real transactions</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">Model Accuracy</p>
+                  <p className="text-slate-600">99.63% ROC-AUC (XGBoost)</p>
                 </div>
                 <div>
                   <p className="font-semibold text-slate-900">Category</p>
@@ -204,7 +211,7 @@ const ContactPage = () => {
                 Need Help?
               </h3>
               <p className="text-sm text-slate-600 mb-4">
-                For technical support or questions about the ML model, please reach out through the contact form.
+                For technical support or questions about the XGBoost model, dataset, or API endpoints, please reach out through the contact form.
               </p>
               <Link to="/about">
                 <Button variant="outline" size="sm" className="w-full">

@@ -12,7 +12,7 @@ import { Toaster } from "./components/ui/sonner";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/online-fraud-detection-frontend">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/check" element={<CheckTransaction />} />
@@ -22,6 +22,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </BrowserRouter>
+
       <Toaster position="top-right" richColors />
     </div>
   );

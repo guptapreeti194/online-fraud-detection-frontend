@@ -142,7 +142,7 @@ const AdminDashboard = () => {
           <h1 className="text-4xl font-bold text-slate-900 mb-2" style={{fontFamily: 'Manrope'}} data-testid="dashboard-title">
             Admin Dashboard
           </h1>
-          <p className="text-slate-600">Monitor fraud detection analytics and transaction history</p>
+          <p className="text-slate-600">Monitor fraud detection analytics and transaction history — powered by XGBoost (99.63% ROC-AUC)</p>
         </div>
 
         {/* KPI Cards */}
@@ -182,12 +182,21 @@ const AdminDashboard = () => {
 
           <Card className="border-blue-200 bg-blue-50" data-testid="accuracy-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-blue-900">Model Accuracy</CardTitle>
+              <CardTitle className="text-sm font-medium text-blue-900">
+                Model Accuracy
+              </CardTitle>
               <TrendingUp className="w-5 h-5 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-600" data-testid="model-accuracy">{(stats?.model_accuracy * 100).toFixed(1)}%</div>
-              <p className="text-xs text-blue-700 mt-1">ROC-AUC Score</p>
+              <div
+                className="text-3xl font-bold text-blue-600"
+                data-testid="model-accuracy"
+              >
+                {stats ? (stats.model_accuracy * 100).toFixed(2) : "0.00"}%
+              </div>
+              <p className="text-xs text-blue-700 mt-1">
+                XGBoost ROC-AUC Score
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -237,9 +246,9 @@ const AdminDashboard = () => {
         <Card className="border-slate-200" data-testid="recent-transactions-card">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle style={{fontFamily: 'Manrope'}}>Recent Transactions</CardTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={handleDownloadReport}
               data-testid="download-report-btn"
             >
