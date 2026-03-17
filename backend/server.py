@@ -267,11 +267,11 @@ async def get_admin_stats(authorized: bool = Depends(verify_admin_token)):
     legit_count = total - fraud_count
     fraud_pct = (fraud_count / total * 100) if total > 0 else 0
 
-   try:
-    fresh_metadata = joblib.load(metadata_path)
-    accuracy = fresh_metadata['best_auc']
-   except:
-    accuracy = 0
+    try:
+        fresh_metadata = joblib.load(metadata_path)
+        accuracy = fresh_metadata['best_auc']
+    except:
+        accuracy = 0
 
     return AdminStats(
         total_transactions=total,
