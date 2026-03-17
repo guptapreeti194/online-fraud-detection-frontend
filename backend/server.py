@@ -313,7 +313,7 @@ async def get_transaction_history(limit: int = 50, authorized: bool = Depends(ve
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
