@@ -1,11 +1,3 @@
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
@@ -176,7 +168,6 @@ def generate_explanation(transaction: TransactionInput, fraud_prob: float):
 
     if transaction.amount > 200000:
         explanations.append("Very high transaction amount")
-
     elif transaction.amount > 50000:
         explanations.append("High transaction amount")
 
@@ -187,20 +178,17 @@ def generate_explanation(transaction: TransactionInput, fraud_prob: float):
         explanations.append("High-risk transaction type")
 
     ratio = transaction.amount / (transaction.oldbalance_org + 1)
-
     if ratio > 0.8:
         explanations.append("Transaction amount high relative to balance")
 
     if not explanations:
-        explanations.append(
-            "Transaction appears normal based on ML analysis"
-        )
+        explanations.append("Transaction appears normal based on ML analysis")
 
     return explanations
 
 
 # ----------------------------
-# API
+# API Routes
 # ----------------------------
 
 @api_router.get("/")
@@ -215,13 +203,9 @@ async def predict_fraud(transaction: TransactionInput):
         raise HTTPException(status_code=503, detail="Model not loaded")
 
     X = preprocess_transaction(transaction)
-
     fraud_prob = ml_model.predict_proba(X)[0][1]
-
     is_fraud = fraud_prob > 0.5
-
     risk_score = int(fraud_prob * 100)
-
     explanation = generate_explanation(transaction, fraud_prob)
 
     result = PredictionResult(
@@ -233,9 +217,7 @@ async def predict_fraud(transaction: TransactionInput):
     )
 
     doc = result.model_dump()
-
     doc["timestamp"] = doc["timestamp"].isoformat()
-
     await db.transactions.insert_one(doc)
 
     return result
@@ -254,7 +236,6 @@ async def admin_login(credentials: LoginRequest):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = secrets.token_urlsafe(32)
-
     active_sessions[token] = {
         "username": credentials.username,
         "created_at": datetime.now(timezone.utc),
@@ -267,7 +248,6 @@ async def admin_login(credentials: LoginRequest):
 async def admin_logout(credentials: HTTPAuthorizationCredentials = Depends(security)):
 
     token = credentials.credentials
-
     if token in active_sessions:
         del active_sessions[token]
 
@@ -282,16 +262,11 @@ async def admin_logout(credentials: HTTPAuthorizationCredentials = Depends(secur
 async def get_admin_stats(authorized: bool = Depends(verify_admin_token)):
 
     transactions = await db.transactions.find({}, {"_id": 0}).to_list(10000)
-
     total = len(transactions)
-
     fraud_count = sum(1 for t in transactions if t.get("is_fraud"))
-
     legit_count = total - fraud_count
-
     fraud_pct = (fraud_count / total * 100) if total > 0 else 0
 
-    # Reload fresh from disk to always get correct accuracy
     fresh_metadata = joblib.load(metadata_path)
     accuracy = fresh_metadata['best_auc'] if fresh_metadata else 0
 
@@ -318,9 +293,7 @@ async def get_transaction_history(limit: int = 50, authorized: bool = Depends(ve
     )
 
     history = []
-
     for t in transactions:
-
         history.append(
             TransactionHistory(
                 id=t.get("id"),
@@ -335,21 +308,21 @@ async def get_transaction_history(limit: int = 50, authorized: bool = Depends(ve
 
 
 # ----------------------------
-# Middleware
+# App setup — CORS + Router
 # ----------------------------
-
-app.include_router(api_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+app.include_router(api_router)
 
 logging.basicConfig(level=logging.INFO)
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
