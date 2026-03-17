@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -267,8 +267,11 @@ async def get_admin_stats(authorized: bool = Depends(verify_admin_token)):
     legit_count = total - fraud_count
     fraud_pct = (fraud_count / total * 100) if total > 0 else 0
 
+   try:
     fresh_metadata = joblib.load(metadata_path)
-    accuracy = fresh_metadata['best_auc'] if fresh_metadata else 0
+    accuracy = fresh_metadata['best_auc']
+   except:
+    accuracy = 0
 
     return AdminStats(
         total_transactions=total,
@@ -310,15 +313,19 @@ async def get_transaction_history(limit: int = 50, authorized: bool = Depends(ve
 # ----------------------------
 # App setup — CORS + Router
 # ----------------------------
+origins = [
+    "http://localhost:3000",
+    "https://*.vercel.app",
+    "https://*.netlify.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(api_router)
 
 logging.basicConfig(level=logging.INFO)
