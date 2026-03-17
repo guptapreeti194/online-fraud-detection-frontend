@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const API = "https://sentinel-ai-backend-weoo.onrender.com/api";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
