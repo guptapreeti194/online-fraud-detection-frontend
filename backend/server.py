@@ -313,16 +313,13 @@ async def get_transaction_history(limit: int = 50, authorized: bool = Depends(ve
 # ----------------------------
 # App setup — CORS + Router
 # ----------------------------
-origins = [
-    "http://localhost:3000",
-    "https://*.vercel.app",
-    "https://*.netlify.app"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=[
+        "https://dapper-vacherin-35fd23.netlify.app",
+        "https://online-fraud-detection-frontend-ocj8gdsth.vercel.app"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
