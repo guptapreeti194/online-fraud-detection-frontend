@@ -2,7 +2,7 @@
 
 A Machine Learning based web application that detects **fraudulent online payment transactions** in real time using **XGBoost** trained on the real **PaySim dataset** (6.3 million transactions).
 
-The system analyzes 26 engineered transaction features and predicts whether a transaction is **Fraudulent or Legitimate**, returning a **risk score and plain-language explanation** — achieving **99.63% ROC-AUC** on 100,000 unseen test transactions.
+The system analyzes 26 engineered transaction features and predicts whether a transaction is **Fraudulent or Legitimate**, returning a **risk score and plain-language explanation** — achieving **99.78% ROC-AUC** on 100,000 unseen test transactions.
 
 ---
 
@@ -22,7 +22,7 @@ This project builds a **real-time fraud detection system** using ensemble Machin
 
 ## 🎯 Objectives
 
-- Detect online payment fraud using **XGBoost** (99.63% ROC-AUC)
+- Detect online payment fraud using **XGBoost** (99.78% ROC-AUC)
 - Engineer **26 fraud-specific features** from raw transaction data
 - Apply **SMOTE** to balance training data from 0.125% fraud to 50/50
 - Build a **real-time fraud prediction API** using FastAPI
@@ -114,7 +114,7 @@ We trained and compared **4 models** on 799,000 SMOTE-balanced samples and evalu
 | Random Forest | 0.9919 |
 | Logistic Regression | 0.9895 |
 
-**XGBoost was selected** as the best performer with 99.63% ROC-AUC.
+**XGBoost was selected** as the best performer with 99.78% ROC-AUC.
 
 ### XGBoost Configuration
 
@@ -342,7 +342,7 @@ Password: admin123
 
 | Metric | Value |
 |--------|-------|
-| ROC-AUC | **99.63%** |
+| ROC-AUC | **99.78%** |
 | Precision (Fraud) | 98% |
 | Recall (Fraud) | 98% |
 | F1-Score (Fraud) | 98% |
