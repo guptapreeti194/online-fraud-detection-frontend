@@ -109,7 +109,7 @@ We trained and compared **4 models** on 799,000 SMOTE-balanced samples and evalu
 
 | Model | ROC-AUC |
 |-------|---------|
-| **XGBoost** ✅ | **0.9963** |
+| **XGBoost** ✅ | **0.9978** |
 | Gradient Boosting | 0.9931 |
 | Random Forest | 0.9919 |
 | Logistic Regression | 0.9895 |
@@ -303,7 +303,7 @@ python ml_training.py
 Expected output:
 ```
 Fraud rate: ~0.13% (real PaySim)
-XGBoost ROC-AUC: 0.9963
+XGBoost ROC-AUC: 0.9978
 ✓ Verified saved metadata — best_auc: 0.9963
 ```
 
