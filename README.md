@@ -303,8 +303,8 @@ python ml_training.py
 Expected output:
 ```
 Fraud rate: ~0.13% (real PaySim)
-XGBoost ROC-AUC: 0.9978
-✓ Verified saved metadata — best_auc: 0.9963
+XGBoost ROC-AUC: 0.9578
+✓ Verified saved metadata — best_auc: 0.9563
 ```
 
 ### 5️⃣ Start Backend
